@@ -2,14 +2,14 @@ const store = require('./store');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const auth = (name, pass, level) => {
+const auth = (name, pass) => {
     return new Promise( async (resolve, reject) => {
         try {
             const user = await store.get(name.toLowerCase());
 
             if(user) throw 'El usuario ya existe';  
             name = name.toLowerCase();
-            await store.save({name, pass, level});
+            await store.save({name, pass});
             resolve({name});
             
         } catch (error) {
@@ -49,7 +49,31 @@ const login = (name, pass) => {
     });
 }
 
+const verify = (token) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+
+            const decoded = await jwt.verify(token, 'secret');
+            const user = await store.get(decoded.data.name.toLowerCase());
+
+            if(!user) throw 'El usuario no existe';  
+
+            const passCompare = await bcrypt.compare(user.pass, decoded.data.pass);
+
+            if(passCompare){
+                resolve(true);
+            }else{
+                resolve(false);
+            }            
+
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 module.exports = {
     auth,
-    login
+    login,
+    verify
 }
