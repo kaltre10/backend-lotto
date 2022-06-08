@@ -1,4 +1,6 @@
 const store = require('./store');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const auth = (name, pass, level) => {
     return new Promise( async (resolve, reject) => {
@@ -23,9 +25,23 @@ const login = (name, pass) => {
 
             if(!user) throw 'El usuario no existe';  
 
-            if(pass != user.pass) throw 'Contraseña Invalida';  
+            if(pass != user.pass) throw 'Contraseña Invalida'; 
+            
+            const crypPass = await bcrypt.hash(pass, 10);
 
-            resolve({id: user._id, name: user.name, level: user.level});
+            const data = {
+                id: user._id, 
+                name: user.name, 
+                level: user.level,
+                pass: crypPass
+            }
+
+            //crear token 
+            const dataUser = jwt.sign({
+                data
+            }, 'secret', { expiresIn: '24h' });
+
+            resolve(dataUser);
             
         } catch (error) {
             reject(error);

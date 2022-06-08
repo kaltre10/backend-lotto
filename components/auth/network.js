@@ -22,7 +22,7 @@ route.post('/login', async (req, res) => {
     try {
         if(!name || !pass) throw 'Datos Invalidos';
         const controller = await responseController.login(name, pass);
-        response.success(req, res, controller, 200)
+        response.success(req, res, controller, 200);
     } catch (error) {
         // console.log(error)
         response.error(req, res, error, 400);
