@@ -2,14 +2,14 @@ const store = require('./store');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const auth = (name, pass) => {
+const auth = (name, pass, user) => {
     return new Promise( async (resolve, reject) => {
         try {
-            const user = await store.get(name.toLowerCase());
+            const dataUser = await store.get(user.toLowerCase());
 
-            if(user) throw 'El usuario ya existe';  
-            name = name.toLowerCase();
-            await store.save({name, pass});
+            if(dataUser) throw 'El usuario ya existe';  
+            user = user.toLowerCase();
+            await store.save({name, user, pass});
             resolve({name});
             
         } catch (error) {
@@ -41,7 +41,10 @@ const login = (name, pass) => {
                 data
             }, 'secret', { expiresIn: '24h' });
 
-            resolve(dataUser);
+            resolve({
+                token: dataUser,
+                level: user.level
+            });
             
         } catch (error) {
             reject(error);
@@ -72,8 +75,23 @@ const verify = (token) => {
     });
 }
 
+const deleteUser = (id) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+
+            await store.deleteUser(id);
+
+            resolve("Usuario Eliminado");
+            
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 module.exports = {
     auth,
     login,
-    verify
+    verify,
+    deleteUser
 }

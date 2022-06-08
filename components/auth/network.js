@@ -4,10 +4,10 @@ const response = require('../../network/response');
 const responseController = require('./controller');
 
 route.post('/', async (req, res) => {
-    const {name, pass} = req.body;
+    const {name, user, pass} = req.body;
     try {
-        if(!name || !pass) throw 'Datos Invalidos';
-        const controller = await responseController.auth(name, pass);
+        if(!user || !name || !pass) throw 'Datos Invalidos';
+        const controller = await responseController.auth(name, user, pass);
         response.success(req, res, controller, 200)
     } catch (error) {
         // console.log(error)
@@ -41,6 +41,18 @@ route.post('/verify', async (req, res) => {
         response.error(req, res, error, 400);
     }
 
+});
+
+route.delete('/user-delete/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        if(!id) throw 'Datos Invalidos';
+        const controller = await responseController.deleteUser(id);
+        response.success(req, res, controller, 200)
+    } catch (error) {
+        // console.log(error)
+        response.error(req, res, error, 400);
+    }
 });
 
 module.exports = route;
