@@ -1,11 +1,23 @@
 const store = require('./store');
+const toDay = require('../../services/toDay');
 
 const get = () => {
     return new Promise( async (resolve, reject) => {
         try {
-            const date = new Date();
-            const toDay = String(date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0')) + "T00:00:00.000+00:00";
+            
             const resultados = await store.get(toDay);
+            resolve(resultados);
+            
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+const query = (date) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const resultados = await store.query(toDay);
             resolve(resultados);
             
         } catch (error) {
@@ -29,5 +41,6 @@ const save = (number, sorteo, date) => {
 
 module.exports = {
     get,
-    save,
+    query,
+    save
 }

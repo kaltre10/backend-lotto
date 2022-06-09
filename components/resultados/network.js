@@ -14,6 +14,18 @@ route.get('/', async (req, res) => {
     }
 });
 
+route.post('/', async (req, res) => {
+    const { date } = req.body;
+    try {
+        if(!date) throw "Datos Invalidos";
+        const controller = await responseController.query(date);
+        response.success(req, res, controller, 200);
+    } catch (error) {
+        // console.log(error)
+        response.error(req, res, error, 400);
+    }
+});
+
 route.post('/save-resultado', async (req, res) => {
     const {number, sorteo, date} = req.body;
     console.log(number, sorteo, date)

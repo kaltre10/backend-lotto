@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+// status
+// 0 -> "proceso"
+// 1 -> "anulado"
+// 2 -> "pagado"
+// 3 -> "ganador"
+
 const Ticket = new Schema({
     user: {
         type: Schema.ObjectId,

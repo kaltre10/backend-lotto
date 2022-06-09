@@ -16,11 +16,11 @@ route.post('/', async (req, res) => {
 
 });
 
-route.get('/:user', async (req, res) => {
-    const { user } = req.params;
+route.post('/ticket-user', async (req, res) => {
+    const { token, date } = req.body;
     try {
-        if(!user) throw 'Datos Invalidos';
-        const controller = await responseController.ticketUser(user);
+        if(!token) throw 'Datos Invalidos';
+        const controller = await responseController.ticketUser(token, date);
         response.success(req, res, controller, 200)
     } catch (error) {
         response.error(req, res, error, 400);
