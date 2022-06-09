@@ -2,6 +2,7 @@ const express = require('express');
 const route = express.Router();
 const response = require('../../network/response');
 const responseController = require('./controller');
+const cors = require('cors');
 
 route.post('/', async (req, res) => {
     const {name, user, pass} = req.body;
@@ -15,7 +16,7 @@ route.post('/', async (req, res) => {
     }
 });
 
-route.post('/login', async (req, res) => {
+route.post('/login', cors(), async (req, res) => {
     const {name, pass} = req.body;
    
     try {
