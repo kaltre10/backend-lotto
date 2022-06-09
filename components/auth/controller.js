@@ -2,7 +2,7 @@ const store = require('./store');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const auth = (name, pass, user) => {
+const auth = (name, user, pass) => {
     return new Promise( async (resolve, reject) => {
         try {
             const dataUser = await store.get(user.toLowerCase());

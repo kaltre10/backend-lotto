@@ -4,7 +4,7 @@ const responseController = require('./controller');
 const route = express.Router();
 
 route.get('/', async (req, res) => {
-   
+    
     try {
         const controller = await responseController.get();
         response.success(req, res, controller, 200);

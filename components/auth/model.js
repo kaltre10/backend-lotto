@@ -18,7 +18,6 @@ const User = new Schema({
     },
     level: {
         type: Number,
-        required: true,
         default: 0
     }
 });

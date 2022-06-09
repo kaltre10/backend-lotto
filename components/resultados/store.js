@@ -1,6 +1,6 @@
 const Model = require('./model');
 
-const get = () => Model.find({date: Date.now()});
+const get = (toDay) => Model.find({date: toDay});
 const save = (data) => Model(data).save();
 
 module.exports = {
