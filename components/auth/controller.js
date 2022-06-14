@@ -27,7 +27,7 @@ const login = (name, pass) => {
     return new Promise( async (resolve, reject) => {
         try {
             const user = await store.get(name.toLowerCase());
-
+            
             if(!user) throw 'El usuario no existe';  
 
             if(pass != user.pass) throw 'Contraseña Invalida'; 

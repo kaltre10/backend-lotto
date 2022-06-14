@@ -16,9 +16,8 @@ route.post('/', async (req, res) => {
     }
 });
 
-route.post('/login', cors(), async (req, res) => {
+route.post('/login', async (req, res) => {
     const {name, pass} = req.body;
-   
     try {
         if(!name || !pass) throw 'Datos Invalidos';
         const controller = await responseController.login(name, pass);

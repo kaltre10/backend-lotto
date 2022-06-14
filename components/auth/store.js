@@ -1,7 +1,7 @@
 const Model = require('./model');
 
 const save = (data) => Model(data).save();
-const get = (name) => Model.findOne({ name }); 
+const get = (user) => Model.findOne({ user }); 
 const getUsers = () => Model.find({ level: 0}); 
 const deleteUser = (_id) => Model.deleteOne({ _id });
 
