@@ -15,10 +15,10 @@ route.get('/', async (req, res) => {
 });
 
 route.post('/', async (req, res) => {
-    const { date } = req.body;
+    const { token, date } = req.body;
     try {
-        if(!date) throw "Datos Invalidos";
-        const controller = await responseController.query(date);
+        if(!token || !date) throw "Datos Invalidos";
+        const controller = await responseController.query(token, date);
         response.success(req, res, controller, 200);
     } catch (error) {
         // console.log(error)
@@ -27,11 +27,10 @@ route.post('/', async (req, res) => {
 });
 
 route.post('/save-resultado', async (req, res) => {
-    const {number, sorteo, date} = req.body;
-    console.log(number, sorteo, date)
+    const {number, resultado, date} = req.body;
     try { 
-        if(!number || !sorteo || !date) throw 'Datos Invalidos';
-        const controller = await responseController.save(number, sorteo, date);
+        if(!number || !resultado || !date) throw 'Datos Invalidos';
+        const controller = await responseController.save(number, resultado, date);
         response.success(req, res, controller, 200);
     } catch (error) {
         // console.log(error)

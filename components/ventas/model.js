@@ -17,8 +17,17 @@ const Ticket = new Schema({
         type: Array,
         default: []
     },
+    count: {
+        type: Number,
+        required: true
+    },
     status: {
         type: Number,
+        default: 0
+    },
+    premio: {
+        type: Number,
+        required: true,
         default: 0
     },
     date: {

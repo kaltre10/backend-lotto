@@ -2,13 +2,18 @@ const store = require('./store');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const auth = (name, user, pass) => {
+const auth = (name, user, pass, token) => {
     return new Promise( async (resolve, reject) => {
         try {
             const dataUser = await store.get(user.toLowerCase());
 
-            if(dataUser) throw 'El usuario ya existe';  
+            if(dataUser) throw 'El usuario ya existe'; 
+            
+            const decoded = await jwt.verify(token, 'secret');
+            if(decoded.data.level != 1) throw 'No tiene Permisos';
+
             user = user.toLowerCase();
+
             await store.save({name, user, pass});
             resolve({name});
             
@@ -64,7 +69,10 @@ const verify = (token) => {
             const passCompare = await bcrypt.compare(user.pass, decoded.data.pass);
 
             if(passCompare){
-                resolve(true);
+                resolve({
+                id: user.id,
+                level: user.level
+                });
             }else{
                 resolve(false);
             }            
@@ -75,9 +83,12 @@ const verify = (token) => {
     });
 }
 
-const deleteUser = (id) => {
+const deleteUser = (id, token) => {
     return new Promise( async (resolve, reject) => {
         try {
+
+            const decoded = await jwt.verify(token, 'secret');
+            if(decoded.data.level != 1) throw 'No tiene Permisos';  
 
             await store.deleteUser(id);
 
@@ -89,9 +100,26 @@ const deleteUser = (id) => {
     });
 }
 
+const getUsers = (token) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const decoded = jwt.verify(token, 'secret');
+
+            if(decoded.data.level != 1) throw 'No tiene permisos';  
+        
+            const dataUser = await store.getUsers();
+            resolve(dataUser);
+            
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 module.exports = {
     auth,
     login,
     verify,
-    deleteUser
+    deleteUser,
+    getUsers
 }
