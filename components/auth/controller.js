@@ -23,21 +23,21 @@ const auth = (name, user, pass, token) => {
     });
 }
 
-const login = (name, pass) => {
+const login = (user, pass) => {
     return new Promise( async (resolve, reject) => {
         try {
-            const user = await store.get(name.toLowerCase());
-            
-            if(!user) throw 'El usuario no existe';  
+            const userDB = await store.get(user.toLowerCase());
 
-            if(pass != user.pass) throw 'Contraseña Invalida'; 
+            if(!userDB) throw 'El usuario no existe';  
+
+            if(pass != userDB.pass) throw 'Contraseña Invalida'; 
             
             const crypPass = await bcrypt.hash(pass, 10);
 
             const data = {
-                id: user._id, 
-                name: user.name, 
-                level: user.level,
+                id: userDB._id, 
+                name: userDB.user, 
+                level: userDB.level,
                 pass: crypPass
             }
 
@@ -48,7 +48,7 @@ const login = (name, pass) => {
 
             resolve({
                 token: dataUser,
-                level: user.level
+                level: userDB.level
             });
             
         } catch (error) {

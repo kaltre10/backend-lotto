@@ -17,10 +17,10 @@ route.post('/', async (req, res) => {
 });
 
 route.post('/login', async (req, res) => {
-    const {name, pass} = req.body;
+    const {user, pass} = req.body;
     try {
-        if(!name || !pass) throw 'Datos Invalidos';
-        const controller = await responseController.login(name, pass);
+        if(!user || !pass) throw 'Datos Invalidos';
+        const controller = await responseController.login(user, pass);
         response.success(req, res, controller, 200);
     } catch (error) {
         // console.log(error)
