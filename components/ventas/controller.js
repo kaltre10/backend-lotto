@@ -7,8 +7,12 @@ const save = (ticket) => {
             
             const  decoded = jwt.verify(ticket.token, 'secret');
             const count = await store.incrementId();
+            const premio = await store.getPremio();
+            const precio = await store.getPrecio();
             ticket.user = decoded.data.id;
             ticket.count = count;
+            ticket.premio = premio.premio;
+            ticket.precio = precio.precio;
             await store.save(ticket);
             resolve("Guardado con Exito!!");
             
@@ -67,9 +71,28 @@ const ticketPagar = (token, id, status) => {
     });
 }
 
+const getVentas = (token, desde, hasta) => {
+
+    return new Promise( async (resolve, reject) => {
+        try {
+
+            const decoded = jwt.verify(token, 'secret');
+            if(decoded.data.level !== 1) throw 'No tiene Permisos';
+            desde = desde + "T00:00:00.000+00:00";
+            hasta = hasta + "T23:59:59.000+00:00";
+            const ventas = await store.getVentas(desde, hasta);
+            resolve(ventas);
+            
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 module.exports = {
     save,
     ticketUser,
     ticketPagar,
-    ticketQuery
+    ticketQuery,
+    getVentas
 }

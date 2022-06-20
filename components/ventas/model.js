@@ -30,6 +30,10 @@ const Ticket = new Schema({
         required: true,
         default: 0
     },
+    precio: {
+        type: Number,
+        required: true,
+    },
     date: {
         type: Date,
         default: Date.now()

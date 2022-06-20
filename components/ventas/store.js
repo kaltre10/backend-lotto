@@ -1,4 +1,6 @@
 const Model = require('./model');
+const premioModel = require('../premios/model');
+const precioModel = require('../precioTicket/model');
 
 const save = (data) => Model(data).save();
 const setTicket = (count, status) => Model.findOneAndUpdate({ count }, { status });
@@ -22,10 +24,18 @@ const incrementId = async () => {
     }
 }
 
+const getPremio = () => premioModel.findOne({ type: 4 });
+const getPrecio = () => precioModel.findOne();
+
+const getVentas = (desde, hasta) => Model.find({ date: {"$gte": desde, "$lt": hasta} }).populate('user');
+
 module.exports = {
     save,
     getTicketUser,
     setTicket,
     incrementId,
-    query
+    query,
+    getPremio,
+    getPrecio,
+    getVentas
 }

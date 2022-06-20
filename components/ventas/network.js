@@ -8,7 +8,7 @@ route.post('/', async (req, res) => {
     try {
         if(!ticket) throw 'Datos Invalidos';
         const controller = await responseController.save(ticket);
-        response.success(req, res, controller, 200)
+        response.success(req, res, controller, 200);
     } catch (error) {
         // console.log(error)
         response.error(req, res, error, 400);
@@ -53,5 +53,17 @@ route.put('/ticket-pagar', async (req, res) => {
     }
 
 });
+
+route.post('/all', async (req, res) => {
+    const { token, desde, hasta } = req.body;
+    try {
+        
+        if(!token || !desde || !hasta) throw 'Datos Invalidos';
+        const controller = await responseController.getVentas(token, desde, hasta);
+        response.success(req, res, controller, 200)
+    } catch (error) {
+        response.error(req, res, error, 400);
+    }
+})
 
 module.exports = route;
