@@ -33,7 +33,7 @@ route.post('/save-resultado', async (req, res) => {
         const controller = await responseController.save(number, resultado, date);
         response.success(req, res, controller, 200);
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         response.error(req, res, error, 400);
     }
 });

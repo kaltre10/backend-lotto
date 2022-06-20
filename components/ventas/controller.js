@@ -11,7 +11,7 @@ const save = (ticket) => {
             const precio = await store.getPrecio();
             ticket.user = decoded.data.id;
             ticket.count = count;
-            ticket.premio = premio.premio;
+            // ticket.premio = premio.premio;
             ticket.precio = precio.precio;
             await store.save(ticket);
             resolve("Guardado con Exito!!");
@@ -23,14 +23,22 @@ const save = (ticket) => {
     });
 }
 
-const ticketUser = (token, date) => {
+const ticketUser = (token, date, status) => {
     return new Promise( async (resolve, reject) => {
         try {
 
             const desde = date + "T00:00:00.000+00:00";
             const hasta = date + "T23:59:59.000+00:00";
             const decoded = await jwt.verify(token, 'secret');
-            const tickets = await store.getTicketUser(decoded.data.id, desde, hasta);
+
+            //verificar consulta por status
+            let tickets;
+            if(status == "0"){
+                tickets = await store.getTicketUser(decoded.data.id, desde, hasta);
+            }else{
+                tickets = await store.getTicketUserStatus(decoded.data.id, desde, hasta, status);
+            }
+            
             resolve(tickets);
             
         } catch (error) {

@@ -17,12 +17,13 @@ route.post('/', async (req, res) => {
 });
 
 route.post('/ticket-user', async (req, res) => {
-    const { token, date } = req.body;
+    const { token, date, status } = req.body;
     try {
-        if(!token) throw 'Datos Invalidos';
-        const controller = await responseController.ticketUser(token, date);
+        if(!token || !date || !String(status)) throw 'Datos Invalidos';
+        const controller = await responseController.ticketUser(token, date, status);
         response.success(req, res, controller, 200)
     } catch (error) {
+        console.log(error)
         response.error(req, res, error, 400);
     }
 

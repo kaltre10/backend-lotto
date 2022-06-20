@@ -27,7 +27,10 @@ const Ticket = new Schema({
     },
     premio: {
         type: Number,
-        required: true,
+        default: 0
+    },
+    aciertos: {
+        type: Number,
         default: 0
     },
     precio: {

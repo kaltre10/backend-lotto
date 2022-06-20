@@ -8,6 +8,9 @@ const query = (count) => Model.find({ count });
 const getTicketUser = (user, desde, hasta) => {
     return Model.find({ user, date: {"$gte": desde, "$lt": hasta} });
 } 
+const getTicketUserStatus = (user, desde, hasta, status) => {
+    return Model.find({ user, date: {"$gte": desde, "$lt": hasta}, status });
+} 
 const incrementId = async () => {
     try {
         //consultamos el ultimo registro
@@ -37,5 +40,6 @@ module.exports = {
     query,
     getPremio,
     getPrecio,
-    getVentas
+    getVentas,
+    getTicketUserStatus
 }

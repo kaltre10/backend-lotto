@@ -7,7 +7,7 @@ const Resultados = new Schema({
         required: true
     },
     sorteo: {
-        type: Number,
+        type: String,
         required: true
     },
     date: {
