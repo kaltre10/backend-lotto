@@ -6,7 +6,7 @@ const save = (data) => Model(data).save();
 const setTicket = (count, status) => Model.findOneAndUpdate({ count }, { status });
 const query = (count) => Model.find({ count });
 const getTicketUser = (user, desde, hasta) => {
-    return Model.find({ user, date: {"$gte": desde, "$lt": hasta} });
+    return Model.find({ user, date: {"$gte": desde, "$lt": hasta} }).sort({ count: 'desc' });
 } 
 const getTicketUserStatus = (user, desde, hasta, status) => {
     return Model.find({ user, date: {"$gte": desde, "$lt": hasta}, status });
@@ -31,6 +31,7 @@ const getPremio = () => premioModel.findOne({ type: 4 });
 const getPrecio = () => precioModel.findOne();
 
 const getVentas = (desde, hasta) => Model.find({ date: {"$gte": desde, "$lt": hasta} }).populate('user');
+const getLastTicket = () => Model.findOne().sort({count: 'desc'});
 
 module.exports = {
     save,
@@ -41,5 +42,6 @@ module.exports = {
     getPremio,
     getPrecio,
     getVentas,
-    getTicketUserStatus
+    getTicketUserStatus,
+    getLastTicket
 }

@@ -32,7 +32,7 @@ const query = (token, date) => {
     });
 }
 
-const save = (number, sorteo, date) => {
+const save = (number, sorteo) => {
     return new Promise( async (resolve, reject) => {
         try {
 
@@ -61,6 +61,8 @@ const save = (number, sorteo, date) => {
                 }
             })
 
+            const toDay = new Date();
+            const date = String(toDay.getFullYear() + '-' + String(toDay.getMonth() + 1).padStart(2, '0') + '-' + String(toDay.getDate()).padStart(2, '0'));
             await store.save({number, sorteo, date});
             resolve("Guardado Correctamente!!!");
             
@@ -72,7 +74,7 @@ const save = (number, sorteo, date) => {
 
 const getTicket = async () => {
     const date = new Date();
-    const day = String(date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0'));
+    const day = String(date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate() - 1).padStart(2, '0'));
     const desde = day + "T00:00:00.000+00:00";
     const hasta = day + "T23:59:59.000+00:00";
     const ventas = await store.getVetas(desde, hasta);

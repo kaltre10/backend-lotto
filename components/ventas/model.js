@@ -40,7 +40,8 @@ const Ticket = new Schema({
     date: {
         type: Date,
         default: Date.now()
-    }
-});
+    },
+    
+}, { timestamps: true });
 
 module.exports = mongoose.model('Ticket', Ticket);

@@ -7,14 +7,15 @@ const save = (ticket) => {
             
             const  decoded = jwt.verify(ticket.token, 'secret');
             const count = await store.incrementId();
-            const premio = await store.getPremio();
+            // const premio = await store.getPremio();
             const precio = await store.getPrecio();
             ticket.user = decoded.data.id;
             ticket.count = count;
             // ticket.premio = premio.premio;
             ticket.precio = precio.precio;
             await store.save(ticket);
-            resolve("Guardado con Exito!!");
+            const lastTicket = await store.getLastTicket();
+            resolve(lastTicket);
             
         } catch (error) {
             console.log(error)
