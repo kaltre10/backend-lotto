@@ -38,7 +38,8 @@ const login = (user, pass) => {
                 id: userDB._id, 
                 name: userDB.user, 
                 level: userDB.level,
-                pass: crypPass
+                pass: crypPass,
+                saldo: userDB.saldo
             }
 
             //crear token 
@@ -48,7 +49,8 @@ const login = (user, pass) => {
 
             resolve({
                 token: dataUser,
-                level: userDB.level
+                level: userDB.level,
+                saldo: userDB.saldo
             });
             
         } catch (error) {
@@ -71,7 +73,8 @@ const verify = (token) => {
             if(passCompare){
                 resolve({
                 id: user.id,
-                level: user.level
+                level: user.level,
+                saldo: user.saldo
                 });
             }else{
                 resolve(false);
@@ -116,10 +119,28 @@ const getUsers = (token) => {
     });
 }
 
+const updateSaldo = (token, userId, saldo) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const decoded = jwt.verify(token, 'secret');
+
+            if(decoded.data.level != 1) throw 'No tiene permisos';  
+            if(saldo <= 0) throw 'El nuevo saldo debe ser mayor a 0'; 
+        
+            await store.userUpdate(userId, saldo);
+            resolve("Modificado!!");
+            
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 module.exports = {
     auth,
     login,
     verify,
     deleteUser,
-    getUsers
+    getUsers,
+    updateSaldo
 }

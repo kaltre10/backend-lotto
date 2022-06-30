@@ -19,6 +19,10 @@ const User = new Schema({
     level: {
         type: Number,
         default: 0
+    },
+    saldo: {
+        type: Number,
+        default: 0
     }
 });
 
