@@ -23,7 +23,6 @@ route.post('/ticket-user', async (req, res) => {
         const controller = await responseController.ticketUser(token, date, status);
         response.success(req, res, controller, 200)
     } catch (error) {
-        console.log(error)
         response.error(req, res, error, 400);
     }
 
@@ -36,7 +35,6 @@ route.post('/ticket-query', async (req, res) => {
         const controller = await responseController.ticketQuery(count);
         response.success(req, res, controller, 200)
     } catch (error) {
-        console.log(error)
         response.error(req, res, error, 400);
     }
 
@@ -49,7 +47,6 @@ route.put('/ticket-pagar', async (req, res) => {
         const controller = await responseController.ticketPagar(token, id, status);
         response.success(req, res, controller, 200)
     } catch (error) {
-        console.log(error)
         response.error(req, res, error, 400);
     }
 

@@ -1,4 +1,5 @@
 const store = require('./store');
+const storeUser = require('../auth/store');
 const jwt = require('jsonwebtoken');
 
 const save = (ticket) => {
@@ -13,12 +14,15 @@ const save = (ticket) => {
             ticket.count = count;
             // ticket.premio = premio.premio;
             ticket.precio = precio.precio;
+
+            const payment = await checkPayment(ticket);
+            if(!payment) throw 'Su Saldo no es suficiente';
+
             await store.save(ticket);
             const lastTicket = await store.getLastTicket();
             resolve(lastTicket);
             
         } catch (error) {
-            console.log(error)
             reject(error);
         }
     });
@@ -95,6 +99,31 @@ const getVentas = (token, desde, hasta) => {
         } catch (error) {
             reject(error);
         }
+    });
+}
+
+const checkPayment = (ticket) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            if(ticket.pago == 0) {
+                resolve(true);
+                return;
+            };
+            const user = await storeUser.userId(ticket.user);
+
+            if(user.saldo < ticket.precio){
+                resolve(false);
+                return;
+            }
+            
+            const newSaldo = user.saldo - ticket.precio;
+            await storeUser.userUpdate(ticket.user, newSaldo);
+
+            resolve(true);
+        } catch (error) {
+            reject(error);
+        }
+        
     });
 }
 
