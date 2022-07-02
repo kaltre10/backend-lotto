@@ -6,6 +6,9 @@ const get = (toDay) => Model.find({date: toDay});
 const query = (user, desde, hasta) => {
     return Model.find({ user, date: {"$gte": desde, "$lt": hasta} });
 } 
+const queryResult = (desde, hasta) => {
+    return Model.find({ date: {"$gte": desde, "$lt": hasta} });
+} 
 const save = (data) => Model(data).save();
 
 const getVetas = (desde, hasta) => ModelTickets.find({ date: {"$gte": desde, "$lt": hasta} });
@@ -20,5 +23,6 @@ module.exports = {
     getVetas,
     getPremios,
     updateTicket,
-    updateStatus
+    updateStatus,
+    queryResult
 }
