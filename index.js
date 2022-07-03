@@ -7,7 +7,7 @@ const connection = require('./configDB');
 app.use(express.json());
 
 //zona horaria
-process.env.TZ = "America/Caracas";
+// process.env.TZ = "America/Caracas";
 
 connection();
 

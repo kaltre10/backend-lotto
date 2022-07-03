@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon .",
-    "start": "NODE_ENV=development node .",
+    "start": "env TZ='America/Caracas' NODE_ENV=development node .",
     "test": "cross-env NODE_ENV=test jest --silent --detectOpenHandles"
   },
   "keywords": [],
