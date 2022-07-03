@@ -81,6 +81,7 @@ const save = (number, sorteo) => {
             resolve("Guardado Correctamente!!!");
             
         } catch (error) {
+            console.log(error)
             reject(error);
         }
     });
