@@ -77,7 +77,7 @@ const save = (number, sorteo) => {
 
             
             const date = String(toDay.getFullYear() + '-' + String(toDay.getMonth() + 1).padStart(2, '0') + '-' + String(toDay.getDate()).padStart(2, '0'));
-            await store.save({number, sorteo});
+            await store.save({number, sorteo, date});
             resolve("Guardado Correctamente!!!");
             
         } catch (error) {
