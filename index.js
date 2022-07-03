@@ -6,6 +6,9 @@ app.use(cors());
 const connection = require('./configDB');
 app.use(express.json());
 
+//zona horaria
+process.env.TZ = "America/Caracas";
+
 connection();
 
 routerApi(app);
