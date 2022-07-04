@@ -13,7 +13,7 @@ const save = (data) => Model(data).save();
 
 const getVetas = (desde, hasta) => ModelTickets.find({ date: {"$gte": desde, "$lt": hasta} });
 const getPremios = () => ModelPremios.find();
-const updateTicket = (_id, aciertos, premio) => ModelTickets.findOneAndUpdate({ _id }, { premio, aciertos});
+const updateTicket = (_id, aciertos, premio, numbers) => ModelTickets.findOneAndUpdate({ _id }, { premio, aciertos, numbers});
 const updateStatus = (_id, status) => ModelTickets.findOneAndUpdate({ _id }, { status });
 
 module.exports = {
