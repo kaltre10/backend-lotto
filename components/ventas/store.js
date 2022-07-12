@@ -2,6 +2,9 @@ const Model = require('./model');
 const premioModel = require('../premios/model');
 const precioModel = require('../precioTicket/model');
 
+const get = (desde, hasta) => {
+    return Model.find({ date: {"$gte": desde, "$lt": hasta} }).sort({ aciertos: 'desc' }).populate('user');
+} 
 const save = (data) => Model(data).save();
 const setTicket = (count, status) => Model.findOneAndUpdate({ count }, { status });
 const query = (count) => Model.find({ count });
@@ -34,6 +37,7 @@ const getVentas = (desde, hasta) => Model.find({ date: {"$gte": desde, "$lt": ha
 const getLastTicket = () => Model.findOne().sort({count: 'desc'});
 
 module.exports = {
+    get,
     save,
     getTicketUser,
     setTicket,

@@ -2,6 +2,22 @@ const store = require('./store');
 const storeUser = require('../auth/store');
 const jwt = require('jsonwebtoken');
 
+const get = (date) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+
+            const desde = date + "T00:00:00.000+00:00";
+            const hasta = date + "T23:59:59.000+00:00";
+            const ventas = await store.get(desde, hasta);
+
+            resolve(ventas);
+            
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 const save = (ticket) => {
     return new Promise( async (resolve, reject) => {
         try {
@@ -128,6 +144,7 @@ const checkPayment = (ticket) => {
 }
 
 module.exports = {
+    get,
     save,
     ticketUser,
     ticketPagar,

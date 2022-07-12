@@ -3,6 +3,19 @@ const route = express.Router();
 const response = require('../../network/response');
 const responseController = require('./controller');
 
+route.get('/:date', async (req, res) => {
+    const { date } = req.params;
+    try {
+        if(!date) throw 'Datos Invalidos';
+        const controller = await responseController.get(date);
+        response.success(req, res, controller, 200);
+    } catch (error) {
+        console.log(error)
+        response.error(req, res, error, 400);
+    }
+
+});
+
 route.post('/', async (req, res) => {
     const {ticket} = req.body;
     try {
