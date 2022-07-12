@@ -38,14 +38,14 @@ const save = (number, sorteo) => {
 
             const toDay = new Date();
             const ventas = await getTicket();
-            const premiosDB = await store.getPremios();
+            // const premiosDB = await store.getPremios();
     
-            const premioAciertos = {
-                1: premiosDB[0].premio,
-                2: premiosDB[1].premio,
-                3: premiosDB[2].premio,
-                4: premiosDB[3].premio
-            }
+            // const premioAciertos = {
+            //     1: premiosDB[0].premio,
+            //     2: premiosDB[1].premio,
+            //     3: premiosDB[2].premio,
+            //     4: premiosDB[3].premio
+            // }
 
             ventas.forEach( async v => {
                 let aciertos = v.aciertos;
@@ -66,7 +66,7 @@ const save = (number, sorteo) => {
                         
                             if(aciertos > 1){  
                                 //modificamos a ticket ganador y el premio
-                                premio = premioAciertos[aciertos - 1];
+                                // premio = premioAciertos[aciertos - 1];
                                 
                                 await store.updateTicket(v._id, aciertos, premio, newNumbers);
                                 await store.updateStatus(v._id, 3);
@@ -80,40 +80,6 @@ const save = (number, sorteo) => {
                 }
 
             })
-
-            // ventas.forEach( async v => {
-            //     let aciertos = v.aciertos;
-            //     let premio = v.premio;
-            //     if(v.numbers.includes(sorteo)){
-            //         // console.log('tickets que incluyen el numero del sorteo', v)
-            //         //verificar no duplicado
-            //         const desde = String(toDay.getFullYear() + '-' + String(toDay.getMonth() + 1).padStart(2, '0') + '-' + String(toDay.getDate()).padStart(2, '0')) + "T00:00:00.000+00:00";
-
-            //         const hasta = String(toDay.getFullYear() + '-' + String(toDay.getMonth() + 1).padStart(2, '0') + '-' + String(toDay.getDate()).padStart(2, '0')) + "T23:59:59.000+00:00";
-           
-            //         const checkRepetResult = await store.queryResult(desde, hasta);
-                    
-            //         const repitResult = checkRepetResult.map(r => {
-            //             if(r.sorteo == sorteo) return r.sorteo;
-            //         });
-                    
-            //         if(!repitResult.includes(sorteo)){
-                        
-            //             aciertos++;
-                      
-            //             if(aciertos > 1){
-                            
-            //                 premio = premioAciertos[aciertos - 1];
-                            
-            //                 // await store.updateTicket(v._id, aciertos, premio);
-            //                 // await store.updateStatus(v._id, 3);
-            //             }else{
-                            
-            //                 // await store.updateTicket(v._id, aciertos, premio);
-            //             }
-            //         }
-            //     }
-            // })
 
             
             const date = String(toDay.getFullYear() + '-' + String(toDay.getMonth() + 1).padStart(2, '0') + '-' + String(toDay.getDate()).padStart(2, '0'));
