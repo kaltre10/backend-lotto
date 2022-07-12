@@ -23,6 +23,10 @@ const User = new Schema({
     saldo: {
         type: Number,
         default: 0
+    },
+    pay : {	
+        type: Number,
+        default: 0
     }
 });
 

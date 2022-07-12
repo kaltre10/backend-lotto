@@ -23,7 +23,7 @@ route.post('/', async (req, res) => {
         const controller = await responseController.save(ticket);
         response.success(req, res, controller, 200);
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         response.error(req, res, error, 400);
     }
 

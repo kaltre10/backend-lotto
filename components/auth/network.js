@@ -79,4 +79,16 @@ route.post('/users-saldo', async (req, res) => {
     }
 });
 
+route.post('/user-pay', async (req, res) => {
+    const {token, userId, pay } = req.body;
+    try {
+        if(!token || !userId || !pay) throw 'Datos Invalidos';
+        const controller = await responseController.updatePay(token, userId, pay);
+        response.success(req, res, controller, 200);
+    } catch (error) {
+        console.log(error)
+        response.error(req, res, error, 400);
+    }
+});
+
 module.exports = route;

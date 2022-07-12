@@ -33,13 +33,14 @@ const login = (user, pass) => {
             if(pass != userDB.pass) throw 'Contraseña Invalida'; 
             
             const crypPass = await bcrypt.hash(pass, 10);
-
+           
             const data = {
                 id: userDB._id, 
                 name: userDB.user, 
                 level: userDB.level,
                 pass: crypPass,
-                saldo: userDB.saldo
+                saldo: userDB.saldo,
+                pay: userDB.pay
             }
 
             //crear token 
@@ -50,7 +51,8 @@ const login = (user, pass) => {
             resolve({
                 token: dataUser,
                 level: userDB.level,
-                saldo: userDB.saldo
+                saldo: userDB.saldo,
+                pay: userDB.pay
             });
             
         } catch (error) {
@@ -74,7 +76,8 @@ const verify = (token) => {
                 resolve({
                 id: user.id,
                 level: user.level,
-                saldo: user.saldo
+                saldo: user.saldo,
+                pay: user.pay
                 });
             }else{
                 resolve(false);
@@ -136,11 +139,28 @@ const updateSaldo = (token, userId, saldo) => {
     });
 }
 
+const updatePay = (token, userId, pay) => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const decoded = jwt.verify(token, 'secret');
+
+            if(decoded.data.level != 1) throw 'No tiene permisos';  
+        
+            await store.userPay(userId, pay);
+            resolve("Modificado!!");
+            
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 module.exports = {
     auth,
     login,
     verify,
     deleteUser,
     getUsers,
-    updateSaldo
+    updateSaldo,
+    updatePay
 }

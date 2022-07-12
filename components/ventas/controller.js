@@ -21,6 +21,11 @@ const get = (date) => {
 const save = (ticket) => {
     return new Promise( async (resolve, reject) => {
         try {
+
+            let date = new Date();
+            if(date.getHours() >= 19){
+                throw 'Se ha terminado el tiempo de venta';
+            }
             
             const  decoded = jwt.verify(ticket.token, 'secret');
             const count = await store.incrementId();
