@@ -16,6 +16,8 @@ const getPremios = () => ModelPremios.find();
 const updateTicket = (_id, aciertos, premio, numbers) => ModelTickets.findOneAndUpdate({ _id }, { premio, aciertos, numbers});
 const updateStatus = (_id, status) => ModelTickets.findOneAndUpdate({ _id }, { status });
 
+const deleteResultado = (_id) => Model.deleteOne({ _id });
+
 module.exports = {
     get,
     save,
@@ -24,5 +26,6 @@ module.exports = {
     getPremios,
     updateTicket,
     updateStatus,
-    queryResult
+    queryResult,
+    deleteResultado
 }

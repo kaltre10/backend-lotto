@@ -38,4 +38,16 @@ route.post('/save-resultado', async (req, res) => {
     }
 });
 
+route.post('/anular-resultado', async (req, res) => {
+    const {number, resultado} = req.body;
+    try { 
+        if(!number.toString() || !resultado) throw 'Datos Invalidos';
+        const controller = await responseController.anular(number, resultado);
+        response.success(req, res, controller, 200);
+    } catch (error) {
+        console.log(error)
+        response.error(req, res, error, 400);
+    }
+});
+
 module.exports = route;
