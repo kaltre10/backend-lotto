@@ -8,6 +8,7 @@ app.use(express.json());
 
 //zona horaria
 process.env.TZ = "America/Caracas";
+console.log(new Date())
 
 connection();
 
