@@ -23,7 +23,8 @@ const save = (ticket) => {
         try {
 
             let date = new Date();
-            if(date.getHours() >= 22){
+            console.log(date, date.getDate())
+            if(date.getHours() >= 23){
                 throw 'Se ha terminado el tiempo de venta';
             }
             
