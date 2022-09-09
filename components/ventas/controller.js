@@ -23,7 +23,6 @@ const save = (ticket) => {
         try {
 
             let date = new Date();
-        
             if(date.getHours() >= 21){
                 throw 'Se ha terminado el tiempo de venta';
             }
@@ -36,8 +35,8 @@ const save = (ticket) => {
             ticket.count = count;
             // ticket.premio = premio.premio;
             ticket.precio = precio.precio;
-            ticket.date = String(date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0')) + "T" + String(date.getHours()) + ":" + String(date.getMinutes());
-
+            // ticket.date = String(date.getFullYear()) + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0') + "T" + String(date.getHours()) + ":" + String(date.getMinutes());
+            ticket.date = String(date.getFullYear()) + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0') + "T" + String(date.getHours()) + ":" + String(date.getMinutes());
             const payment = await checkPayment(ticket);
             if(!payment) throw 'Su Saldo no es suficiente';
 
