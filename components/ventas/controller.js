@@ -36,7 +36,7 @@ const save = (ticket) => {
             // ticket.premio = premio.premio;
             ticket.precio = precio.precio;
             // ticket.date = String(date.getFullYear()) + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0') + "T" + String(date.getHours()) + ":" + String(date.getMinutes());
-            ticket.date = String(date.getFullYear()) + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0') + "T" + String(date.getHours()) + ":" + String(date.getMinutes());
+            ticket.date = String(date.getFullYear()) + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0') + "T" + String(date.getHours()) + ":" + String(date.getMinutes()).padStart(2, '0');
             const payment = await checkPayment(ticket);
             if(!payment) throw 'Su Saldo no es suficiente';
 
