@@ -27,10 +27,10 @@ route.post('/', async (req, res) => {
 });
 
 route.post('/save-resultado', async (req, res) => {
-    const {number, resultado} = req.body;
+    const {number, resultado, date} = req.body;
     try { 
-        if(!number || !resultado) throw 'Datos Invalidos';
-        const controller = await responseController.save(number, resultado);
+        if(!number || !resultado || !date) throw 'Datos Invalidos';
+        const controller = await responseController.save(number, resultado, date);
         response.success(req, res, controller, 200);
     } catch (error) {
         console.log(error)

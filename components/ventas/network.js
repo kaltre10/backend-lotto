@@ -3,11 +3,11 @@ const route = express.Router();
 const response = require('../../network/response');
 const responseController = require('./controller');
 
-route.get('/:date', async (req, res) => {
-    const { date } = req.params;
+route.get('/:desde/:date', async (req, res) => {
+    const { desde, date } = req.params;
     try {
-        if(!date) throw 'Datos Invalidos';
-        const controller = await responseController.get(date);
+        if(!desde || !date) throw 'Datos Invalidos';
+        const controller = await responseController.get(desde, date);
         response.success(req, res, controller, 200);
     } catch (error) {
         console.log(error)
